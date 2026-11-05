@@ -532,62 +532,77 @@
     }
     .music-toggle[aria-pressed="true"] { background: rgba(212,160,23,0.24); }
 
-    /* Developer contact: small icon (bottom-left), expands at page bottom */
-    .dev-badge {
-      position: fixed;
-      left: 14px; bottom: calc(14px + env(safe-area-inset-bottom, 0px));
-      z-index: 5;
+    /* Developer contact: in-footer, cool and non-intrusive */
+    .dev-credit {
+      margin: 1.15rem auto 0;
       display: inline-flex;
       align-items: center;
-      gap: 0;
-      height: 42px;
-      max-width: 42px;
-      padding: 0 11px;
+      gap: 0.6rem;
+      padding: 0.42rem 0.85rem 0.42rem 0.42rem;
       border-radius: 999px;
       text-decoration: none;
-      color: var(--gold-light);
-      background: rgba(42, 10, 18, 0.82);
-      border: 1px solid rgba(243,213,122,0.42);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.26);
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-      overflow: hidden;
-      white-space: nowrap;
-      transition: max-width .4s cubic-bezier(.2,.9,.2,1), padding .35s ease, gap .35s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+      color: rgba(255,248,239,0.9);
+      background: linear-gradient(180deg, rgba(255,248,239,0.07), rgba(255,248,239,0.03));
+      border: 1px solid rgba(243,213,122,0.22);
+      box-shadow: 0 10px 26px rgba(0,0,0,0.18);
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
       -webkit-tap-highlight-color: transparent;
+      max-width: calc(100% - 1rem);
     }
-    .dev-badge:hover {
-      background: rgba(42, 10, 18, 0.92);
-      border-color: rgba(243,213,122,0.58);
-      box-shadow: 0 12px 26px rgba(0,0,0,0.32);
+    .dev-credit:hover {
+      transform: translateY(-2px);
+      border-color: rgba(243,213,122,0.42);
+      box-shadow: 0 14px 32px rgba(0,0,0,0.24), 0 0 18px rgba(243,213,122,0.06);
+      background: linear-gradient(180deg, rgba(255,248,239,0.09), rgba(255,248,239,0.04));
     }
-    .dev-badge.expand {
-      max-width: 210px;
-      padding: 0 13px 0 11px;
-      gap: 8px;
-    }
-    .dev-mark {
+    .dev-avatar-wrap {
+      position: relative;
+      width: 36px;
+      height: 36px;
       flex: 0 0 auto;
-      width: 22px;
-      height: 22px;
+      border-radius: 50%;
+      padding: 2px;
+      background: conic-gradient(from 0deg, var(--gold-light), rgba(212,160,23,0.25), var(--gold), rgba(243,213,122,0.35), var(--gold-light));
+      animation: devRingSpin 6s linear infinite;
+    }
+    @keyframes devRingSpin { to { transform: rotate(360deg); } }
+    .dev-avatar {
+      width: 100%;
+      height: 100%;
       border-radius: 50%;
       object-fit: cover;
       display: block;
-      border: 1px solid rgba(243,213,122,0.35);
-      box-shadow: 0 0 0 1px rgba(0,0,0,0.12);
+      border: 2px solid rgba(26,6,12,0.85);
+      transform: rotate(0deg);
+      animation: devRingSpin 6s linear infinite reverse;
     }
-    .dev-label {
+    .dev-credit-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      line-height: 1.15;
+      min-width: 0;
+    }
+    .dev-credit-text .k {
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(243,213,122,0.82);
+      font-family: 'Cinzel', serif;
+    }
+    .dev-credit-text .v {
       font-size: 0.78rem;
       font-weight: 600;
-      color: #fff6df;
-      opacity: 0;
-      transform: translateX(-4px);
-      transition: opacity .25s ease .05s, transform .3s ease .05s;
-      pointer-events: none;
+      letter-spacing: 0.01em;
+      background: linear-gradient(90deg, #f3d57a, #fff6df, #d4a017, #f3d57a);
+      background-size: 220% auto;
+      color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: devTextShine 4s linear infinite;
     }
-    .dev-badge.expand .dev-label {
-      opacity: 1;
-      transform: translateX(0);
+    @keyframes devTextShine {
+      to { background-position: 220% center; }
     }
     @media (max-width: 760px) {
       .details { grid-template-columns: 1fr; }
@@ -627,10 +642,9 @@
       .blessing .sig { font-size: clamp(1.65rem, 8vw, 2rem); }
       footer { font-size: 0.8rem; padding: 1.4rem 0.75rem 2.2rem; }
       .music-toggle { width: 42px; height: 42px; right: 10px; bottom: calc(10px + env(safe-area-inset-bottom, 0px)); font-size: 0.95rem; }
-      .dev-badge { left: 10px; bottom: calc(10px + env(safe-area-inset-bottom, 0px)); height: 38px; max-width: 38px; padding: 0 10px; }
-      .dev-badge.expand { max-width: 185px; }
-      .dev-mark { width: 18px; height: 18px; }
-      .dev-label { font-size: 0.74rem; }
+      .dev-credit { margin-top: 0.95rem; padding: 0.38rem 0.72rem 0.38rem 0.38rem; gap: 0.5rem; }
+      .dev-avatar-wrap { width: 32px; height: 32px; }
+      .dev-credit-text .v { font-size: 0.74rem; }
     }
     @media (max-width: 380px) {
       h1 { font-size: clamp(1.95rem, 11.5vw, 2.5rem); }
@@ -639,7 +653,7 @@
     }
     @media (prefers-reduced-motion: reduce) {
       .particle, .sparkle, .mandala, .hero-card, .hero-card::after, .kicker, h1, .amp, .subtitle, .divider, .photo-frame, .intro, .details, .cta-row,
-      .photo-inner img, .photo-glow, .play-ring, .reveal, .modal, .modal-panel {
+      .photo-inner img, .photo-glow, .play-ring, .reveal, .modal, .modal-panel, .dev-avatar-wrap, .dev-avatar, .dev-credit-text .v {
         animation: none !important;
         transition: none !important;
         transform: none !important;
@@ -760,7 +774,15 @@
   <button class="music-toggle" id="musicToggle" type="button" aria-label="Toggle background music" aria-pressed="false" title="Play / pause music">♪</button>
 
   <footer>
-    Crafted with love for the engagement of Chiranjeevi & Kalyani.
+    <div>Crafted with love for the engagement of Chiranjeevi & Kalyani.</div>
+    <a class="dev-credit" href="https://mail.google.com/mail/?view=cm&fs=1&to=tjitendrakumar97@gmail.com&su=Hello%20Jitu%20-%20Engagement%20Invitation" target="_blank" rel="noopener noreferrer" aria-label="Contact Developer - JITU via Gmail" title="Contact Developer - JITU">
+      <span class="dev-avatar-wrap" aria-hidden="true">
+        <img class="dev-avatar" src="developer.jpeg" alt="" />
+      </span>
+      <span class="dev-credit-text">
+        <span class="v">Contact Developer - JITU</span>
+      </span>
+    </a>
   </footer>
 
   <script>
@@ -898,28 +920,6 @@
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
     })();
 
-    // Expand developer contact when scrolled to bottom
-    (function devBadgeOnScroll() {
-      const badge = document.querySelector('.dev-badge');
-      if (!badge) return;
-      function toggle() {
-        const doc = document.documentElement;
-        const remaining = doc.scrollHeight - window.scrollY - window.innerHeight;
-        badge.classList.toggle('expand', remaining <= 120);
-      }
-      window.addEventListener('scroll', toggle, { passive: true });
-      window.addEventListener('resize', toggle);
-      window.addEventListener('load', toggle);
-      document.addEventListener('DOMContentLoaded', toggle);
-      toggle();
-      setTimeout(toggle, 400);
-      setTimeout(toggle, 1200);
-    })();
   </script>
-
-  <a class="dev-badge" href="https://mail.google.com/mail/?view=cm&fs=1&to=tjitendrakumar97@gmail.com&su=Hello%20Jitu%20-%20Engagement%20Invitation" target="_blank" rel="noopener noreferrer" aria-label="Contact developer via Gmail" title="Contact developer">
-    <img class="dev-mark" src="developer.jpeg" alt="" aria-hidden="true" />
-    <span class="dev-label">Contact developer</span>
-  </a>
 </body>
 </html>
