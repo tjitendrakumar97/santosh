@@ -6,7 +6,7 @@
   <title>Chiranjeevi & Kalyani | Engagement Invitation</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Poppins:wght@300;400;500;600&family=Noto+Serif+Devanagari:wght@400;600&family=Noto+Serif+Telugu:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --maroon-deep: #4a0818;
@@ -87,6 +87,71 @@
     .mandala.tl { top: -120px; left: -120px; }
     .mandala.br { bottom: -140px; right: -140px; animation-direction: reverse; }
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Top shloka banner */
+    .shloka-banner {
+      position: relative;
+      z-index: 2;
+      padding: 0.85rem 1rem 0.75rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(243,213,122,0.16);
+      background: linear-gradient(180deg, rgba(26,6,12,0.55), rgba(26,6,12,0.18));
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+    .shloka-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      position: relative;
+      min-height: 3.2em;
+      display: grid;
+      align-items: center;
+    }
+    .shloka-text {
+      grid-area: 1 / 1;
+      margin: 0;
+      color: rgba(255,246,223,0.95);
+      line-height: 1.55;
+      font-size: clamp(0.88rem, 2.4vw, 1.05rem);
+      opacity: 0;
+      clip-path: inset(0 100% 0 0);
+      transform: translateX(-6px);
+      transition: clip-path .7s cubic-bezier(.4,0,.2,1), opacity .35s ease, transform .5s ease;
+      will-change: clip-path, opacity, transform;
+      padding: 0 0.25rem;
+    }
+    .shloka-text.active {
+      opacity: 1;
+      clip-path: inset(0 0 0 0);
+      transform: translateX(0);
+    }
+    .shloka-text.exit {
+      opacity: 0;
+      clip-path: inset(0 0 0 100%);
+      transform: translateX(6px);
+    }
+    .shloka-text.script-telugu { font-family: 'Noto Serif Telugu', 'Poppins', serif; font-weight: 500; }
+    .shloka-text.script-devanagari { font-family: 'Noto Serif Devanagari', 'Poppins', serif; font-weight: 500; }
+    .shloka-text.script-english { font-family: 'Cinzel', 'Poppins', serif; font-size: clamp(0.82rem, 2.1vw, 0.98rem); color: rgba(255,248,239,0.9); letter-spacing: 0.01em; }
+    .shloka-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 0.45rem;
+    }
+    .shloka-dots span {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: rgba(243,213,122,0.28);
+      transition: transform .25s ease, background .25s ease;
+    }
+    .shloka-dots span.on { background: var(--gold-light); transform: scale(1.2); }
+    @media (max-width: 520px) {
+      .shloka-banner { padding: 0.7rem 0.65rem 0.6rem; }
+      .shloka-text { font-size: 0.86rem; line-height: 1.5; }
+      .shloka-text.script-english { font-size: 0.8rem; }
+      .shloka-inner { min-height: 3.6em; }
+    }
 
     header.hero {
       position: relative;
@@ -435,18 +500,66 @@
 
     .blessing {
       text-align: center;
-      padding: 1.8rem 1.2rem;
+      padding: clamp(1.25rem, 4vw, 1.9rem);
       border-radius: 22px;
-      background: linear-gradient(180deg, rgba(212,160,23,0.13), rgba(255,255,255,0.03));
+      background: linear-gradient(180deg, rgba(212,160,23,0.12), rgba(255,255,255,0.03));
       border: 1px solid var(--border);
       box-shadow: 0 18px 40px rgba(0,0,0,0.2);
     }
-    .blessing p { margin: 0.4rem 0; line-height: 1.8; color: rgba(255,248,239,0.9); }
+    .blessing-msg {
+      margin: 0 auto 1.1rem;
+      max-width: 52ch;
+      color: rgba(255,248,239,0.82);
+      line-height: 1.7;
+      font-size: 0.96rem;
+    }
+    .blessing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      max-width: 680px;
+      margin: 0 auto 1rem;
+      text-align: left;
+    }
+    .b-item {
+      position: relative;
+      padding: 0.85rem 0.9rem 0.85rem 0.95rem;
+      border-radius: 14px;
+      background: rgba(0,0,0,0.16);
+      border: 1px solid rgba(243,213,122,0.18);
+      overflow: hidden;
+    }
+    .b-item::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 10px; bottom: 10px;
+      width: 3px;
+      border-radius: 3px;
+      background: linear-gradient(180deg, var(--gold-light), rgba(212,160,23,0.35));
+      opacity: 0.9;
+    }
+    .b-item.full { grid-column: 1 / -1; }
+    .b-item .b-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.64rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(243,213,122,0.88);
+      margin-bottom: 0.28rem;
+    }
+    .b-item .b-value {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #fffaf2;
+      line-height: 1.4;
+      word-break: break-word;
+    }
     .blessing .sig {
-      margin-top: 0.9rem;
+      margin-top: 0.85rem;
       font-family: 'Great Vibes', cursive;
-      font-size: clamp(1.9rem, 7vw, 2.4rem);
+      font-size: clamp(1.85rem, 6.5vw, 2.35rem);
       color: var(--gold-light);
+      line-height: 1.15;
     }
 
     footer {
@@ -534,17 +647,17 @@
 
     /* Developer contact: in-footer, cool and non-intrusive */
     .dev-credit {
-      margin: 1.15rem auto 0;
+      margin: 0.9rem auto 0;
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
-      padding: 0.42rem 0.85rem 0.42rem 0.42rem;
+      gap: 0.45rem;
+      padding: 0.3rem 0.62rem 0.3rem 0.3rem;
       border-radius: 999px;
       text-decoration: none;
       color: rgba(255,248,239,0.9);
-      background: linear-gradient(180deg, rgba(255,248,239,0.07), rgba(255,248,239,0.03));
-      border: 1px solid rgba(243,213,122,0.22);
-      box-shadow: 0 10px 26px rgba(0,0,0,0.18);
+      background: linear-gradient(180deg, rgba(255,248,239,0.06), rgba(255,248,239,0.025));
+      border: 1px solid rgba(243,213,122,0.2);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.16);
       transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
       -webkit-tap-highlight-color: transparent;
       max-width: calc(100% - 1rem);
@@ -557,8 +670,8 @@
     }
     .dev-avatar-wrap {
       position: relative;
-      width: 36px;
-      height: 36px;
+      width: 28px;
+      height: 28px;
       flex: 0 0 auto;
       border-radius: 50%;
       padding: 2px;
@@ -591,7 +704,7 @@
       font-family: 'Cinzel', serif;
     }
     .dev-credit-text .v {
-      font-size: 0.78rem;
+      font-size: 0.68rem;
       font-weight: 600;
       letter-spacing: 0.01em;
       background: linear-gradient(90deg, #f3d57a, #fff6df, #d4a017, #f3d57a);
@@ -637,14 +750,18 @@
       .video-card { padding: 1rem; border-radius: 18px; }
       .video-card p { font-size: 0.92rem; }
       .play-ring { width: 62px; height: 62px; font-size: 1.25rem; }
-      .blessing { padding: 1.2rem 0.9rem; border-radius: 18px; }
-      .blessing p { font-size: 0.9rem; line-height: 1.65; }
-      .blessing .sig { font-size: clamp(1.65rem, 8vw, 2rem); }
+      .blessing { padding: 1.1rem 0.85rem; border-radius: 18px; }
+      .blessing-msg { font-size: 0.88rem; line-height: 1.6; margin-bottom: 0.9rem; }
+      .blessing-grid { grid-template-columns: 1fr; gap: 8px; }
+      .b-item { padding: 0.72rem 0.78rem 0.72rem 0.85rem; border-radius: 12px; }
+      .b-item .b-label { font-size: 0.6rem; }
+      .b-item .b-value { font-size: 0.92rem; }
+      .blessing .sig { font-size: clamp(1.6rem, 8.5vw, 1.95rem); margin-top: 0.7rem; }
       footer { font-size: 0.8rem; padding: 1.4rem 0.75rem 2.2rem; }
       .music-toggle { width: 42px; height: 42px; right: 10px; bottom: calc(10px + env(safe-area-inset-bottom, 0px)); font-size: 0.95rem; }
-      .dev-credit { margin-top: 0.95rem; padding: 0.38rem 0.72rem 0.38rem 0.38rem; gap: 0.5rem; }
-      .dev-avatar-wrap { width: 32px; height: 32px; }
-      .dev-credit-text .v { font-size: 0.74rem; }
+      .dev-credit { margin-top: 0.75rem; padding: 0.26rem 0.52rem 0.26rem 0.26rem; gap: 0.4rem; }
+      .dev-avatar-wrap { width: 24px; height: 24px; }
+      .dev-credit-text .v { font-size: 0.64rem; }
     }
     @media (max-width: 380px) {
       h1 { font-size: clamp(1.95rem, 11.5vw, 2.5rem); }
@@ -668,6 +785,15 @@
   <div class="sparkles" id="sparkles" aria-hidden="true"></div>
   <div class="mandala tl" aria-hidden="true"></div>
   <div class="mandala br" aria-hidden="true"></div>
+
+  <div class="shloka-banner" aria-label="Sacred shloka">
+    <div class="shloka-inner">
+      <p class="shloka-text script-telugu active" data-index="0">వక్రతుండ మహాకాయ సూర్యకోటి సమప్రభ ।<br>నిర్విఘ్నం కురు మే దేవ సర్వకార్యేషు సర్వదా ॥</p>
+      <p class="shloka-text script-devanagari" data-index="1">वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ ।<br>निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥</p>
+      <p class="shloka-text script-english" data-index="2">Vakratunda Mahakaya Suryakoti Samaprabha,<br>Nirvighnam Kuru Me Deva Sarva-Karyeshu Sarvada.</p>
+    </div>
+    <div class="shloka-dots" aria-hidden="true"><span class="on"></span><span></span><span></span></div>
+  </div>
 
   <audio id="bgMusic" src="Music.mp3" loop preload="auto"></audio>
 
@@ -742,14 +868,8 @@
 
     <section class="reveal">
       <div class="blessing">
-        <h2 class="section-title" style="margin-bottom:0.55rem;">With Love & Blessings</h2>
-        <p>Your presence and good wishes will make our engagement celebration truly memorable.</p>
-        <p><strong>Date:</strong> 12 December 2026 &nbsp;•&nbsp; <strong>Time:</strong> 10:00 AM</p>
-        <p><strong>Venue:</strong> Viswanath Function Hall, Paralakhemundi, Odisha</p>
-        <div class="cta-row" style="margin-top:1rem; animation:none; opacity:1; transform:none;">
-          <a class="btn map" href="https://maps.app.goo.gl/9cSBaGPTUUw8eZkH6" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
-          <a class="btn" href="tel:+917978140320">Contact</a>
-        </div>
+        <h2 class="section-title" style="margin-bottom:0.45rem;">With Love & Blessings</h2>
+        <p class="blessing-msg" style="margin-bottom:0.2rem;">Your presence and good wishes will make our engagement celebration truly memorable.</p>
         <div class="sig">Chiranjeevi & Kalyani</div>
       </div>
     </section>
@@ -775,7 +895,7 @@
 
   <footer>
     <div>Crafted with love for the engagement of Chiranjeevi & Kalyani.</div>
-    <a class="dev-credit" href="https://mail.google.com/mail/?view=cm&fs=1&to=tjitendrakumar97@gmail.com&su=Hello%20Jitu%20-%20Engagement%20Invitation" target="_blank" rel="noopener noreferrer" aria-label="Contact Developer - JITU via Gmail" title="Contact Developer - JITU">
+    <a class="dev-credit" href="https://wa.me/917064008605" target="_blank" rel="noopener noreferrer" aria-label="Contact Developer - JITU on WhatsApp" title="Contact Developer - JITU on WhatsApp">
       <span class="dev-avatar-wrap" aria-hidden="true">
         <img class="dev-avatar" src="developer.jpeg" alt="" />
       </span>
@@ -920,6 +1040,32 @@
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
     })();
 
+    // Shloka cycle: Telugu -> Devanagari -> English with wipe
+    (function shlokaCycle() {
+      const texts = Array.prototype.slice.call(document.querySelectorAll('.shloka-text'));
+      const dots = Array.prototype.slice.call(document.querySelectorAll('.shloka-dots span'));
+      if (!texts.length) return;
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let i = 0;
+      function show(next) {
+        const cur = texts[i];
+        const nxt = texts[next];
+        if (reduce) {
+          texts.forEach(function (t) { t.classList.remove('active','exit'); });
+          nxt.classList.add('active');
+        } else {
+          cur.classList.remove('active');
+          cur.classList.add('exit');
+          nxt.classList.remove('exit');
+          void nxt.offsetWidth;
+          nxt.classList.add('active');
+          setTimeout(function () { cur.classList.remove('exit'); }, 750);
+        }
+        dots.forEach(function (d, di) { d.classList.toggle('on', di === next); });
+        i = next;
+      }
+      setInterval(function () { show((i + 1) % texts.length); }, reduce ? 3500 : 4200);
+    })();
   </script>
 </body>
 </html>
